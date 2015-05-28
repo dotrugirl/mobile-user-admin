@@ -1,0 +1,162 @@
+<?php
+
+$form->init();
+$form->setAttribute('action', $this->url('admins', array('id'=>$sid, 'action' => 'edit')));
+$form->setAttribute('role', 'form');
+$form->setAttribute('class', 'form-horizontal');
+$form->prepare();
+
+// смотрим есть ли ошибки
+$errors = $form->getInputFilter()->getMessages();
+$showSuccessStyle = false;
+if (count($errors) > 0) $showSuccessStyle = true;
+
+echo $this->form()->openTag($form);
+
+ ?>
+ <h2 class="text-center"><?php echo $this->translate('Edit admin') ?></h2>
+ <div class="form-group <?php if ($showSuccessStyle) echo 'has-success has-feedback' ?>">
+    <label for="active" class="col-sm-offset-2 col-sm-2 control-label"><?php echo $this->formLabel($form->get('active')) ?></label>
+    <div class="col-sm-4"><?php echo $this->formElement($form->get('active')) ?></div>
+ </div>
+ <div class="form-group <?php if ($showSuccessStyle) echo 'has-success has-feedback' ?>">
+    <label class="col-sm-offset-2 col-sm-2 control-label"><?php echo $this->formLabel($form->get('role')) ?></label>
+    <div class="col-sm-4"><?php echo $this->formElement($form->get('role')) ?></div>
+    <?php if ($this->formElementErrors($form->get('role'))):?>
+        <span class="help-block"><?php echo $this->formElementErrors($form->get('role')) ?></span>
+    <?php endif; ?>
+ </div>
+ 
+ <div class="form-group 
+    <?php if ($this->formElementErrors($form->get('email'))) echo 'has-error has-feedback' ?> 
+    <?php if ($showSuccessStyle) echo 'has-success has-feedback' ?>
+    ">
+    <label for="email" class="col-sm-offset-2 col-sm-2 control-label"><?php echo $this->formLabel($form->get('email')) ?></label>
+    <div class="col-sm-4">
+        <?php echo $this->formElement($form->get('email')) ?>
+        <?php if ($this->formElementErrors($form->get('email'))):?>
+            <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+        <?php elseif ($showSuccessStyle): ?>
+            <span class="glyphicon glyphicon-ok form-control-feedback"></span>
+        <?php endif ?>
+    </div>
+    <?php if ($this->formElementErrors($form->get('email'))):?>
+        <?php echo $this->formElementErrors()
+                                      ->setMessageOpenFormat('<span class="help-block">')
+                                      ->setMessageSeparatorString('<br>')
+                                      ->setMessageCloseString('</span>')
+                                      ->render($form->get('email'));
+        ?>
+    <?php endif ?>
+ </div>
+ 
+ <div class="form-group 
+    <?php if ($this->formElementErrors($form->get('last_name'))) echo 'has-error has-feedback' ?> 
+    <?php if ($showSuccessStyle) echo 'has-success has-feedback' ?>
+    ">
+    <label for="last_name" class="col-sm-offset-2 col-sm-2 control-label"><?php echo $this->formLabel($form->get('last_name')) ?></label>
+    <div class="col-sm-4">
+        <?php echo $this->formElement($form->get('last_name')) ?>
+        <?php if ($this->formElementErrors($form->get('last_name'))):?>
+            <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+        <?php elseif ($showSuccessStyle): ?>
+            <span class="glyphicon glyphicon-ok form-control-feedback"></span>
+        <?php endif ?>
+    </div>
+    <?php if ($this->formElementErrors($form->get('last_name'))):?>
+        <?php echo $this->formElementErrors()
+                                      ->setMessageOpenFormat('<span class="help-block">')
+                                      ->setMessageSeparatorString('<br>')
+                                      ->setMessageCloseString('</span>')
+                                      ->render($form->get('last_name'));
+        ?>
+    <?php endif ?>
+ </div>
+ 
+ <div class="form-group 
+    <?php if ($this->formElementErrors($form->get('first_name'))) echo 'has-error has-feedback' ?> 
+    <?php if ($showSuccessStyle) echo 'has-success has-feedback' ?>
+    ">
+    <label for="first_name" class="col-sm-offset-2 col-sm-2 control-label"><?php echo $this->formLabel($form->get('first_name')) ?></label>
+    <div class="col-sm-4">
+        <?php echo $this->formElement($form->get('first_name')) ?>
+        <?php if ($this->formElementErrors($form->get('first_name'))):?>
+            <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+        <?php elseif ($showSuccessStyle): ?>
+            <span class="glyphicon glyphicon-ok form-control-feedback"></span>
+        <?php endif ?>
+    </div>
+    <?php if ($this->formElementErrors($form->get('first_name'))):?>
+        <?php echo $this->formElementErrors()
+                                      ->setMessageOpenFormat('<span class="help-block">')
+                                      ->setMessageSeparatorString('<br>')
+                                      ->setMessageCloseString('</span>')
+                                      ->render($form->get('first_name'));
+        ?>
+    <?php endif ?>
+ </div>
+ 
+ <div class="form-group 
+    <?php if ($this->formElementErrors($form->get('passwd'))) echo 'has-error has-feedback' ?> 
+    <?php if ($showSuccessStyle) echo 'has-success has-feedback' ?>
+    ">
+    <label for="password" class="col-sm-offset-2 col-sm-2 control-label"><?php echo $this->formLabel($form->get('passwd')) ?></label>
+    <div class="col-sm-4">
+        <?php echo $this->formElement($form->get('passwd')) ?>
+        <?php if ($this->formElementErrors($form->get('passwd'))):?>
+            <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+        <?php elseif ($showSuccessStyle): ?>
+            <span class="glyphicon glyphicon-ok form-control-feedback"></span>
+        <?php endif ?>
+    </div>
+    <?php if ($this->formElementErrors($form->get('passwd'))):?>
+        <?php echo $this->formElementErrors()
+                                      ->setMessageOpenFormat('<span class="help-block">')
+                                      ->setMessageSeparatorString('<br>')
+                                      ->setMessageCloseString('</span>')
+                                      ->render($form->get('passwd'));
+        ?>
+    <?php endif; ?>
+ </div>
+ 
+ <div class="form-group 
+    <?php if ($this->formElementErrors($form->get('confirm_password'))) echo 'has-error has-feedback' ?> 
+    <?php if ($showSuccessStyle) echo 'has-success has-feedback' ?>
+    ">
+    <label for="confirm_password" class="col-sm-offset-2 col-sm-2 control-label"><?php echo $this->formLabel($form->get('confirm_password')) ?></label>
+    <div class="col-sm-4">
+        <?php echo $this->formElement($form->get('confirm_password')) ?>
+        <?php if ($this->formElementErrors($form->get('confirm_password'))):?>
+            <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+        <?php elseif ($showSuccessStyle): ?>
+            <span class="glyphicon glyphicon-ok form-control-feedback"></span>
+        <?php endif ?>
+    </div>
+    <?php if ($this->formElementErrors($form->get('confirm_password'))):?>
+        <?php echo $this->formElementErrors()
+                                      ->setMessageOpenFormat('<span class="help-block">')
+                                      ->setMessageSeparatorString('<br>')
+                                      ->setMessageCloseString('</span>')
+                                      ->render($form->get('confirm_password'));
+        ?>
+    <?php endif; ?>
+ </div>
+ <div class="form-group">
+    <div class="col-sm-offset-4 col-sm-1">
+      <?php echo $this->formElement($form->get('submit')) ?>
+    </div>
+    <div class="col-sm-1">
+      <?php echo $this->formElement($form->get('cancel')) ?>
+    </div>
+  </div>
+
+ <?php echo $this->form()->closeTag();?>
+ 
+ <script type="text/javascript">
+ $(document).ready(function(){
+	 	$("#exit").click(function(e){
+	 		window.location.href = '<?php echo $this->url('admins') ?>';
+	 		return false;
+	 		});
+	 });
+ </script>

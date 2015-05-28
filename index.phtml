@@ -1,0 +1,87 @@
+<div class="row">
+    <div class="col-md-3">
+        <?php echo $this->partial('sudo/accessMenu', array('active' => 'admins')); ?>
+    </div><!-- /.col-md-3 -->
+    <div class="col-md-9">
+        <h2><?php echo $this->translate('Platform Admins') ?></h2>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th class="col-md-1"><?php echo $this->translate('Active') ?></th>
+                    <th class="col-md-4"><?php echo $this->translate('User') ?></th>
+                    <th class="col-md-2"><?php echo $this->translate('Email') ?></th>
+                    <th class="col-md-3"><?php echo $this->translate('Roles') ?></th>
+                    <th class="col-md-2"></th>
+                </tr>
+            </thead>
+            <tbody>
+            
+
+                <?foreach($UserAdmins as $uAdmin):?>
+                <tr>
+                    <td>
+                        <?if($uAdmin->active == 0):?>
+                            <span class="text-muted"><?php echo $this->translate('No') ?></span>
+                        <?else:?>
+                            <span class="text-success"><?php echo $this->translate('Yes') ?></span>
+                        <?endif;?> 
+                    </td>
+                    <td><a href="<?php echo $this->url('admins', array('action' => 'edit', 'id' => $uAdmin->id)) ?>"><? echo $this->escapeHtml($uAdmin->first_name)." ".$this->escapeHtml($uAdmin->last_name); ?></a></td>
+                    <td><?php echo $uAdmin->email ?></td>
+                    <td>
+                        <?php $roles = $this->adminRoles($uAdmin->id) ?>
+                        <?php foreach ($roles as $role): ?>
+                            <a href="<?php echo $this->url('access', array('action' => 'edit', 'id' => $role['id'])) ?>" target="_blank"><?php echo $this->escapeHtml($role['title']) ?></a><br>
+                        <?php endforeach; ?>
+                    </td>
+                    <td>
+                        <a class="confirm-delete" 
+                                href="<?= $this->url('admins', array('action' => 'delete', 'id' => $uAdmin->id)) ?>" 
+                                data-info ="<?php echo $this->escapeHtml($uAdmin->first_name)." ".$this->escapeHtml($uAdmin->last_name) ?>"><?php echo $this->translate('Delete') ?></a>
+                    </td>
+                </tr>
+                <?endforeach;?>
+                
+            </tbody>
+        </table>
+        <p><a class="btn btn-primary" href="<?php echo $this->url('admins', array('action' => 'create')) ?>"><?php echo $this->translate('Add admin') ?></a></p>
+    </div><!-- /.col-md-9 -->
+</div><!-- /.row -->
+<?php //TODO сделать поддержку языков?>
+<div class="modal fade" id="deleteModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title"><?php echo $this->translate('Delete admin') ?></h4>
+      </div>
+      <div class="modal-body">
+        <p></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo $this->translate('No') ?></button>
+        <button type="button" class="btn btn-primary" id="delete-confirm"><?php echo $this->translate('Yes') ?></button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<script>
+    $( document ).ready(function() {
+    	$('.confirm-delete').click(function(e) {
+    	    e.preventDefault();
+    	    $('#deleteModal').data('href', $(this).attr('href')).data('roleTitle', $(this).data('info')).modal('show');
+    	});
+
+    	$('#deleteModal').on('show.bs.modal', function() {
+    		var info = $(this).data('roleTitle');
+    		$('#deleteModal .modal-body p').html('<?php echo $this->translate('Delete admin') ?> "'+info+'"?');
+    	});
+    	
+        $( "#delete-confirm" ).click(function() {
+        	var href = $('#deleteModal').data('href');
+        	$('#deleteModal').modal('hide');
+        	window.location.href=href;
+        });
+    });
+</script>
